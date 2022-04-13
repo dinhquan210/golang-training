@@ -1,0 +1,7 @@
+time="2022-04-09T02:06:22.865796405Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25
+time="2022-04-09T02:07:17.878991482Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25
+time="2022-04-09T02:07:58.78122765Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25
+time="2022-04-09T02:08:05.023144608Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25
+time="2022-04-09T02:08:59.793747956Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25
+time="2022-04-09T02:09:00.878722971Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25
+time="2022-04-09T02:09:04.045741122Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=25

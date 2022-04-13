@@ -1,0 +1,5 @@
+development:
+  dialect: postgres
+  datasource: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=golang-training sslmode=disable
+  dir: migrations
+  table: migrations

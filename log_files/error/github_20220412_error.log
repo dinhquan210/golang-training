@@ -1,0 +1,17 @@
+time="2022-04-12T04:08:41.152592406Z" level=error msg="could not find name updated_at in model.User{UserId:\"3caa8e36-ba16-11ec-89f7-0242ac120003\", FullName:\"quandinh\", Email:\"quan2210quan@gmail.com\", PassWord:\"$2a$04$rzcHtOsf8dd7dagMI70rwexY/5zmBN28kbCSfBsWUtdiiWOwO4d5y\", Role:\"MEMBER\", CreatedAt:time.Date(2022, time.April, 12, 4, 8, 41, 150970128, time.Local), UpdatedAt:time.Date(2022, time.April, 12, 4, 8, 41, 150970178, time.Local), Token:\"\"}" file=/build/repository/repo_impl/repo_impl.go line=37
+time="2022-04-12T04:08:41.159011494Z" level=error msg="dang ky that bai" file=/build/handler/user_handler.go line=65
+time="2022-04-12T06:21:43.653757165Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:32:22.737069428Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:35:34.578516818Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:38:02.01194043Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:39:37.721517846Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:40:08.4309077Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:40:44.7521188Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:41:05.3508575Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:41:17.8683522Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:52:26.6610863Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:52:54.8653663Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:53:05.5245361Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:53:43.9331609Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:54:16.6460656Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37
+time="2022-04-12T06:54:53.7715616Z" level=error msg="luu anh that bai" file=/build/handler/image_handler.go line=37

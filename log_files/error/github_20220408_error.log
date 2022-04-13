@@ -1,0 +1,2 @@
+time="2022-04-08T03:44:07.327311523Z" level=error msg="missing destination name update_at in *model.User" file=/build/repository/repo_impl/repo_impl.go line=57
+time="2022-04-08T03:47:02.325969856Z" level=error msg="missing destination name update_at in *model.User" file=/build/repository/repo_impl/repo_impl.go line=57
