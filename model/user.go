@@ -9,6 +9,6 @@ type User struct {
 	PassWord  string    `json:"-" db:"password, omitempty"`
 	Role      string    `json:"role,omitempty" db:"role, omitempty"`
 	CreatedAt time.Time `json:"-" db:"created_at, omitempty"`
-	UpdatedAt time.Time `json:"-" db:"updated_at, omitempty"`
+	UpdatedAt time.Time `json:"-" db:"update_at, omitempty"`
 	Token     string    `json:"token,omitempty"`
 }

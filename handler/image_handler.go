@@ -8,7 +8,6 @@ import (
 	"golang-training/utils/unsplashutils"
 	"net/http"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,35 +17,13 @@ type ImageHandler struct {
 
 func (i *ImageHandler) RandomImage(c echo.Context) error {
 	// Create a Resty Client
-	client := resty.New()
-	reBody := unsplashutils.ResultType{}
-	client.R().SetResult(&reBody).
-		Get("https://api.unsplash.com/photos/random/?client_id=05qCv0koWY-_KqKyyCRmtrBqtbBISysGPznnA6wCNNg")
-
-	image := model.Image{
-		ImageID:      reBody.ImageID,
-		URLs_full:    reBody.URLs.URLs_full,
-		URLs_regular: reBody.URLs.RULs_regular,
-		URLs_Raw:     reBody.URLs.URLs_Raw,
-		Width:        reBody.Width,
-		Height:       reBody.Height,
-		Description:  reBody.Description,
-	}
-
+	image := unsplashutils.CreateUnsplash()
 	image, err := i.ImageRepo.SaveImage(c.Request().Context(), image)
 	if err != nil {
 		log.Error(err.Error())
-		// return c.JSON(http., model.Response{
-		// 	StatusCode: http.StatusConflict,
-		// 	Message:    err.Error(),
-		// 	Data:       nil,
-		// })
+		return model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
 	}
-	return c.JSON(http.StatusOK, model.Response{
-		StatusCode: http.StatusOK,
-		Message:    "lấy ảnh thành công",
-		Data:       image,
-	})
+	return model.ResponseHelper(c, http.StatusOK, "lấy ảnh thành công", image)
 }
 
 func (i *ImageHandler) UpdateImage(c echo.Context) error {
@@ -54,32 +31,23 @@ func (i *ImageHandler) UpdateImage(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return err
 	}
-
-	image := model.Image{
-		ImageID:     req.Id,
-		Description: req.Description,
-	}
-	image, err := i.ImageRepo.UpdateImageDescription(c.Request().Context(), image)
+	image, err := i.ImageRepo.CheckIdImage(c.Request().Context(), req)
 	if err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, model.Response{
-			StatusCode: http.StatusUnprocessableEntity,
-			Message:    err.Error(),
-		})
+		return model.ResponseHelper(c, http.StatusUnauthorized, err.Error(), nil)
 	}
 
-	return c.JSON(http.StatusCreated, model.Response{
-		StatusCode: http.StatusCreated,
-		Message:    "Update thong tin anh thanh cong",
-		Data:       image,
-	})
+	image, err = i.ImageRepo.UpdateImageDescription(c.Request().Context(), image)
+	if err != nil {
+		model.ResponseHelper(c, http.StatusUnprocessableEntity, err.Error(), nil)
+	}
+	return model.ResponseHelper(c, http.StatusCreated, "Update thong tin anh thanh cong", image)
 }
 
-func (i *ImageHandler) ShowImage(c echo.Context) error {
+func (i *ImageHandler) ShowImages(c echo.Context) error {
 
-	arr, _ := i.ImageRepo.SelectImage(c.Request().Context(), []model.Image{})
-	return c.JSON(http.StatusOK, model.Response{
-		StatusCode: http.StatusOK,
-		Message:    "Xử lý thành công",
-		Data:       arr,
-	})
+	arr, err := i.ImageRepo.SelectImage(c.Request().Context(), []model.Image{})
+	if err != nil {
+		log.Error()
+	}
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", arr)
 }

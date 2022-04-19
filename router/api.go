@@ -26,6 +26,6 @@ func (api *API) SetupRouter() {
 	//image
 	api.Echo.GET("/random-image", api.ImageHandler.RandomImage)
 	api.Echo.PUT("/update-image", api.ImageHandler.UpdateImage) // by Id
-	api.Echo.PUT("/show-image", api.ImageHandler.ShowImage)
+	api.Echo.PUT("/show-images", api.ImageHandler.ShowImages)
 	// api.Echo.PUT("/delete-image", api.ImageHandler.DelImage) // by Id
 }

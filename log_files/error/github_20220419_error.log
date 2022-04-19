@@ -1,0 +1,3 @@
+time="2022-04-19T01:26:42.071634474Z" level=error msg="Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=74
+time="2022-04-19T01:57:37.704359079Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T01:57:37.712049368Z" level=error file=/build/handler/image_handler.go line=50

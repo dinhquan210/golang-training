@@ -2,12 +2,12 @@ package handler
 
 import (
 	"fmt"
-	"golang-training/banana"
 	"golang-training/log"
 	"golang-training/model"
 	req "golang-training/model/req"
 	"golang-training/repository"
 	"golang-training/security"
+	"golang-training/utils/errorutil"
 	"net/http"
 
 	"github.com/golang-jwt/jwt"
@@ -23,19 +23,11 @@ func (u *UserHandler) HandlerSignUp(c echo.Context) error {
 	req := req.ReqSignUp{}
 	if err := c.Bind(&req); err != nil {
 		log.Error(err.Error())
-		return c.JSON(http.StatusBadRequest, model.Response{
-			StatusCode: http.StatusBadRequest,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 	if err := c.Validate(req); err != nil {
 		log.Error(err.Error())
-		return c.JSON(http.StatusBadRequest, model.Response{
-			StatusCode: http.StatusBadRequest,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	hash := security.HashAndSalt([]byte(req.PassWord))
@@ -44,11 +36,7 @@ func (u *UserHandler) HandlerSignUp(c echo.Context) error {
 	userId, err := uuid.NewUUID()
 	if err != nil {
 		log.Error(err.Error())
-		return c.JSON(http.StatusForbidden, model.Response{
-			StatusCode: http.StatusForbidden,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusForbidden, err.Error(), nil)
 	}
 
 	user := model.User{
@@ -63,86 +51,47 @@ func (u *UserHandler) HandlerSignUp(c echo.Context) error {
 	user, err = u.UserRepo.SaveUser(c.Request().Context(), user)
 	if err != nil {
 		log.Error(err.Error())
-		return c.JSON(http.StatusConflict, model.Response{
-			StatusCode: http.StatusConflict,
-			Message:    err.Error(),
-			Data:       nil,
-		})
-
+		model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
 	}
 
 	//GEN token
 	token, err := security.GenToken(user)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, model.Response{
-			StatusCode: http.StatusInternalServerError,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusInternalServerError, err.Error(), nil)
 	}
 	user.Token = token
-
-	return c.JSON(http.StatusOK, model.Response{
-		StatusCode: http.StatusOK,
-		Message:    "Xử lý thành công",
-		Data:       user,
-	})
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", user)
 }
 
 func (u *UserHandler) HandlerSignIn(c echo.Context) error {
 	req := req.ReqSignIn{}
 	if err := c.Bind(&req); err != nil {
 		log.Error(err.Error())
-		return c.JSON(http.StatusBadRequest, model.Response{
-			StatusCode: http.StatusBadRequest,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	if err := c.Validate(req); err != nil {
 		log.Error(err.Error())
-		return c.JSON(http.StatusBadRequest, model.Response{
-			StatusCode: http.StatusBadRequest,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	user, err := u.UserRepo.CheckLogin(c.Request().Context(), req)
 	if err != nil {
-		return c.JSON(http.StatusUnauthorized, model.Response{
-			StatusCode: http.StatusUnauthorized,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		return model.ResponseHelper(c, http.StatusUnauthorized, err.Error(), nil)
 	}
 
 	// neu ko error sql -> check pass
 	isTheSame := security.ComparePasswords(user.PassWord, []byte(req.Password))
 	if !isTheSame {
-		return c.JSON(http.StatusUnauthorized, model.Response{
-			StatusCode: http.StatusUnauthorized,
-			Message:    "Đăng nhập thất bại",
-			Data:       nil,
-		})
+		return model.ResponseHelper(c, http.StatusUnauthorized, "Đăng nhập thất bại", nil)
 	}
 
 	token, err := security.GenToken(user)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, model.Response{
-			StatusCode: http.StatusInternalServerError,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusInternalServerError, err.Error(), nil)
 	}
 	user.Token = token
-
-	return c.JSON(http.StatusOK, model.Response{
-		StatusCode: http.StatusOK,
-		Message:    "Xử lý thành công",
-		Data:       user,
-	})
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", user)
 }
 
 func (u *UserHandler) Profile(c echo.Context) error {
@@ -152,26 +101,12 @@ func (u *UserHandler) Profile(c echo.Context) error {
 
 	user, err := u.UserRepo.SelectUserById(c.Request().Context(), claims.UserId)
 	if err != nil {
-		if err == banana.UserNotFound {
-			return c.JSON(http.StatusNotFound, model.Response{
-				StatusCode: http.StatusNotFound,
-				Message:    err.Error(),
-				Data:       nil,
-			})
+		if err == errorutil.UserNotFound {
+			model.ResponseHelper(c, http.StatusNotFound, err.Error(), nil)
 		}
-
-		return c.JSON(http.StatusInternalServerError, model.Response{
-			StatusCode: http.StatusInternalServerError,
-			Message:    err.Error(),
-			Data:       nil,
-		})
+		model.ResponseHelper(c, http.StatusInternalServerError, err.Error(), nil)
 	}
-
-	return c.JSON(http.StatusOK, model.Response{
-		StatusCode: http.StatusOK,
-		Message:    "Xử lý thành công",
-		Data:       user,
-	})
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", user)
 }
 
 func (u *UserHandler) UpdateProfile(c echo.Context) error {
@@ -183,10 +118,7 @@ func (u *UserHandler) UpdateProfile(c echo.Context) error {
 	// validate thông tin gửi lên
 	err := c.Validate(req)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, model.Response{
-			StatusCode: http.StatusBadRequest,
-			Message:    err.Error(),
-		})
+		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	token := c.Get("user").(*jwt.Token)
@@ -199,15 +131,7 @@ func (u *UserHandler) UpdateProfile(c echo.Context) error {
 
 	user, err = u.UserRepo.UpdateUser(c.Request().Context(), user)
 	if err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, model.Response{
-			StatusCode: http.StatusUnprocessableEntity,
-			Message:    err.Error(),
-		})
+		model.ResponseHelper(c, http.StatusUnprocessableEntity, err.Error(), nil)
 	}
-
-	return c.JSON(http.StatusCreated, model.Response{
-		StatusCode: http.StatusCreated,
-		Message:    "Xử lý thành công",
-		Data:       user,
-	})
+	return model.ResponseHelper(c, http.StatusCreated, "Xử lý thành công", user)
 }

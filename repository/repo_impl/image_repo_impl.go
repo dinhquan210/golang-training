@@ -2,12 +2,14 @@ package repo_impl
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-	"golang-training/banana"
 	"golang-training/db"
 	"golang-training/log"
 	"golang-training/model"
+	"golang-training/model/req"
 	"golang-training/repository"
+	"golang-training/utils/errorutil"
 	"time"
 )
 
@@ -31,7 +33,7 @@ func (i *ImageRepoImpl) SaveImage(context context.Context, image model.Image) (m
 	_, err := i.sql.Db.NamedExecContext(context, statement, image)
 	if err != nil {
 		fmt.Println(err)
-		return image, banana.GetRandomFail
+		return image, errorutil.GetRandomFail
 	}
 	return image, err
 }
@@ -61,4 +63,24 @@ func (i *ImageRepoImpl) SelectImage(context context.Context, arr []model.Image) 
 		return arr, err
 	}
 	return arr, nil
+}
+
+func (i *ImageRepoImpl) SelectImageById(context context.Context, imageId string) (model.Image, error) {
+
+	return model.Image{}, nil
+}
+
+func (i *ImageRepoImpl) CheckIdImage(context context.Context, req_id req.ReqImageUpdate) (model.Image, error) {
+	var image = model.Image{}
+	err := i.sql.Db.GetContext(context, &image, "SELECT * FROM images WHERE id=$1", req_id.Id)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return image, errorutil.ImageNotFound
+		}
+		log.Error(err.Error())
+		return image, err
+	}
+
+	return image, nil
 }

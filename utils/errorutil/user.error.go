@@ -1,4 +1,4 @@
-package banana
+package errorutil
 
 import "errors"
 

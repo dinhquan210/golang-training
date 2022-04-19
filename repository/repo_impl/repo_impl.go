@@ -3,12 +3,12 @@ package repo_impl
 import (
 	"context"
 	"database/sql"
-	"golang-training/banana"
 	"golang-training/db"
 	"golang-training/log"
 	"golang-training/model"
 	"golang-training/model/req"
 	"golang-training/repository"
+	"golang-training/utils/errorutil"
 	"time"
 
 	"github.com/lib/pq"
@@ -27,21 +27,20 @@ func NewUserRepo(sql *db.Sql) repository.UserRepo {
 func (u UserRepoImpl) SaveUser(context context.Context, user model.User) (model.User, error) {
 	statement := `
 		INSERT INTO users(user_id, email, password, role, full_name, created_at, update_at)
-		VALUES(:user_id, :email, :password, :role, :full_name, :created_at, :updated_at )
+		VALUES(:user_id, :email, :password, :role, :full_name, :created_at, :update_at )
 	`
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
 
 	_, err := u.sql.Db.NamedExecContext(context, statement, user)
 	if err != nil {
-		log.Error(err.Error())
 		if err, ok := err.(*pq.Error); ok {
 			if err.Code.Name() == "unique_violation" {
-				return user, banana.UesrConflict
+				return user, errorutil.UesrConflict
 			}
 
 		}
-		return user, banana.SignUpFail
+		return user, errorutil.SignUpFail
 	}
 	return user, nil
 }
@@ -52,7 +51,7 @@ func (u UserRepoImpl) CheckLogin(context context.Context, loginReq req.ReqSignIn
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return user, banana.UserNotFound
+			return user, errorutil.UserNotFound
 		}
 		log.Error(err.Error())
 		return user, err
@@ -69,7 +68,7 @@ func (u UserRepoImpl) SelectUserById(context context.Context, userId string) (mo
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return user, banana.UserNotFound
+			return user, errorutil.UserNotFound
 		}
 		log.Error(err.Error())
 		return user, err
@@ -98,10 +97,10 @@ func (u UserRepoImpl) UpdateUser(context context.Context, user model.User) (mode
 	count, err := result.RowsAffected()
 	if err != nil {
 		log.Error(err.Error())
-		return user, banana.UserNotUpdated
+		return user, errorutil.UserNotUpdated
 	}
 	if count == 0 {
-		return user, banana.UserNotUpdated
+		return user, errorutil.UserNotUpdated
 	}
 
 	return user, nil

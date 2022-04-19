@@ -14,20 +14,11 @@ func IsAdmin() echo.MiddlewareFunc {
 			//handler logic
 			req := req.ReqSignIn{}
 			if err := c.Bind(&req); err != nil {
-				return c.JSON(http.StatusBadRequest, model.Response{
-					StatusCode: http.StatusBadRequest,
-					Message:    err.Error(),
-					Data:       nil,
-				})
+				model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 			}
 			if req.Email != "admin@gmail.com" {
-				return c.JSON(http.StatusBadRequest, model.Response{
-					StatusCode: http.StatusBadRequest,
-					Message:    "ban khong co quyen goi api nay",
-					Data:       nil,
-				})
+				model.ResponseHelper(c, http.StatusBadRequest, "ban khong co quyen goi api nay", nil)
 			}
-
 			return next(c)
 		}
 	}
