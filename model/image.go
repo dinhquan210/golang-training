@@ -11,5 +11,6 @@ type Image struct {
 	UpdatedAt    time.Time `JSON:"updated_at,omitempty" db:"updated_at,omitempty"`
 	Width        int       `JSON:"width,omitempty" db:"width,omitempty"`
 	Height       int       `JSON:"height,omitempty" db:"height,omitempty"`
-	Description  string    `JSON:"description,omitempty" db:"description,omitempty"`
+	Description  *string   `JSON:"description,omitempty" db:"description, omitempty"`
+	User_Creat   *string   `JSON:"user,omitempty" db:"user, omitempty"`
 }

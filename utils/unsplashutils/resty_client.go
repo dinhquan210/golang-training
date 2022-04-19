@@ -17,7 +17,7 @@ func CreateUnsplash() model.Image {
 		URLs_Raw:     reBody.URLs.URLs_Raw,
 		Width:        reBody.Width,
 		Height:       reBody.Height,
-		Description:  reBody.Description,
+		Description:  &reBody.Description,
 	}
 	return image
 }

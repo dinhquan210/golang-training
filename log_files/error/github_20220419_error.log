@@ -1,3 +1,25 @@
 time="2022-04-19T01:26:42.071634474Z" level=error msg="Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=74
 time="2022-04-19T01:57:37.704359079Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
 time="2022-04-19T01:57:37.712049368Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T02:57:52.325558543Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T02:57:52.334558724Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T02:58:36.100469512Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T02:58:36.101515268Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T02:59:50.106868002Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T02:59:50.107679175Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T03:00:47.820541191Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T03:00:47.821998991Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T03:00:49.394480723Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T03:00:49.395037899Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T03:01:04.625204174Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T03:01:04.626190258Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T03:01:21.473983631Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T03:01:21.474996793Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T03:03:16.190299654Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T03:03:16.195028294Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T03:03:17.076659318Z" level=error msg="sql: Scan error on column index 8, name \"description\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-19T03:03:17.077425799Z" level=error file=/build/handler/image_handler.go line=50
+time="2022-04-19T09:16:31.0548266Z" level=error msg="code=400, message=Syntax error: offset=77, error=invalid character '}' looking for beginning of object key string, internal=invalid character '}' looking for beginning of object key string" file=/build/handler/user_handler.go line=69
+time="2022-04-19T09:16:31.0654467Z" level=error msg="Email là bắt buộc \n Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=74
+time="2022-04-19T09:16:58.7191013Z" level=error msg="code=400, message=Syntax error: offset=74, error=invalid character '}' looking for beginning of object key string, internal=invalid character '}' looking for beginning of object key string" file=/build/handler/user_handler.go line=69
+time="2022-04-19T09:16:58.7212646Z" level=error msg="Email là bắt buộc \n Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=74

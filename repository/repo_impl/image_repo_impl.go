@@ -70,9 +70,9 @@ func (i *ImageRepoImpl) SelectImageById(context context.Context, imageId string)
 	return model.Image{}, nil
 }
 
-func (i *ImageRepoImpl) CheckIdImage(context context.Context, req_id req.ReqImageUpdate) (model.Image, error) {
+func (i *ImageRepoImpl) CheckIdImage(context context.Context, id string) (model.Image, error) {
 	var image = model.Image{}
-	err := i.sql.Db.GetContext(context, &image, "SELECT * FROM images WHERE id=$1", req_id.Id)
+	err := i.sql.Db.GetContext(context, &image, "SELECT * FROM images WHERE id=$1", id)
 
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -83,4 +83,13 @@ func (i *ImageRepoImpl) CheckIdImage(context context.Context, req_id req.ReqImag
 	}
 
 	return image, nil
+}
+
+func (i *ImageRepoImpl) DelImageById(context context.Context, req_id req.ReqImageDelete) error {
+
+	_, err := i.sql.Db.Exec("DELETE FROM images WHERE id=$1", req_id.Id)
+	if err != nil {
+		return errorutil.DeleteImageFail
+	}
+	return nil
 }

@@ -95,9 +95,9 @@ func (u *UserHandler) HandlerSignIn(c echo.Context) error {
 }
 
 func (u *UserHandler) Profile(c echo.Context) error {
-	fmt.Println(c.Request().Header)
 	tokenData := c.Get("user").(*jwt.Token)
 	claims := tokenData.Claims.(*model.JwtCustomClaims)
+	fmt.Println(claims.FullName)
 
 	user, err := u.UserRepo.SelectUserById(c.Request().Context(), claims.UserId)
 	if err != nil {
@@ -134,4 +134,25 @@ func (u *UserHandler) UpdateProfile(c echo.Context) error {
 		model.ResponseHelper(c, http.StatusUnprocessableEntity, err.Error(), nil)
 	}
 	return model.ResponseHelper(c, http.StatusCreated, "Xử lý thành công", user)
+}
+
+func (u *UserHandler) CreateImage(c echo.Context) error {
+	req := req.ReqUserCreatImage{}
+	if err := c.Bind(&req); err != nil {
+		return err
+	}
+
+	ImageID, err := uuid.NewUUID()
+	if err != nil {
+		log.Error(err.Error())
+		model.ResponseHelper(c, http.StatusForbidden, err.Error(), nil)
+	}
+	image := model.Image{
+		ImageID:     ImageID.String(),
+		URLs_full:   req.URLs_full,
+		Width:       req.Width,
+		Height:      req.Height,
+		Description: &req.Description,
+	}
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", image)
 }

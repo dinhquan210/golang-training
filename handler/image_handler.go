@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"golang-training/log"
 	"golang-training/model"
 	"golang-training/model/req"
@@ -9,6 +10,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
 )
 
 type ImageHandler struct {
@@ -31,7 +33,7 @@ func (i *ImageHandler) UpdateImage(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return err
 	}
-	image, err := i.ImageRepo.CheckIdImage(c.Request().Context(), req)
+	image, err := i.ImageRepo.CheckIdImage(c.Request().Context(), req.Id)
 	if err != nil {
 		return model.ResponseHelper(c, http.StatusUnauthorized, err.Error(), nil)
 	}
@@ -50,4 +52,34 @@ func (i *ImageHandler) ShowImages(c echo.Context) error {
 		log.Error()
 	}
 	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", arr)
+}
+
+func (i *ImageHandler) DeleteImage(c echo.Context) error {
+	req := req.ReqImageDelete{}
+	if err := c.Bind(&req); err != nil {
+		return err
+	}
+	// kiem tra ton tai id
+	_, err := i.ImageRepo.CheckIdImage(c.Request().Context(), req.Id)
+	if err != nil {
+		return model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
+	}
+	//
+	err = i.ImageRepo.DelImageById(c.Request().Context(), req)
+	if err != nil {
+		return err
+	}
+	return model.ResponseHelper(c, http.StatusOK, "xoá ảnh thành công", nil)
+}
+
+func (i *ImageHandler) CronJobRandomImage() error {
+	// Create a Resty Client
+	image := unsplashutils.CreateUnsplash()
+	image, err := i.ImageRepo.SaveImage(context.Background(), image)
+	if err != nil {
+		log.Error(err.Error())
+		return err
+	}
+	logrus.Info("lấy ảnh thành công")
+	return nil
 }
