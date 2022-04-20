@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"golang-training/log"
 	"golang-training/model"
 	"golang-training/model/req"
@@ -9,6 +10,7 @@ import (
 	"golang-training/utils/unsplashutils"
 	"net/http"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
 )
@@ -50,6 +52,7 @@ func (i *ImageHandler) ShowImages(c echo.Context) error {
 	arr, err := i.ImageRepo.SelectImage(c.Request().Context(), []model.Image{})
 	if err != nil {
 		log.Error()
+		return err
 	}
 	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", arr)
 }
@@ -82,4 +85,15 @@ func (i *ImageHandler) CronJobRandomImage() error {
 	}
 	logrus.Info("lấy ảnh thành công")
 	return nil
+}
+
+func (i *ImageHandler) ShowImagesByUser(c echo.Context) error {
+	tokenData := c.Get("user").(*jwt.Token)
+	claims := tokenData.Claims.(*model.JwtCustomClaims)
+	fmt.Println(claims.FullName)
+	arr, err := i.ImageRepo.SelectImageByUser(c.Request().Context(), claims.FullName)
+	if err != nil {
+		return err
+	}
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", arr)
 }

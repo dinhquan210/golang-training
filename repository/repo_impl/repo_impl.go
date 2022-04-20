@@ -105,3 +105,36 @@ func (u UserRepoImpl) UpdateUser(context context.Context, user model.User) (mode
 
 	return user, nil
 }
+
+func (u UserRepoImpl) SaveImageCreatByUser(context context.Context, image model.Image) (model.Image, error) {
+	statement := `
+		INSERT INTO images(id, urls_full,updated_at,created_at,width,height,description,user_creat )
+		VALUES(:id, :urls_full, :created_at, :updated_at, :width, :height, :description, :user_creat )
+	`
+	image.CreatedAt = time.Now()
+	image.UpdatedAt = time.Now()
+	_, err := u.sql.Db.NamedExecContext(context, statement, image)
+	if err != nil {
+		return image, errorutil.UserCreatImageFail
+	}
+	return image, nil
+}
+
+func (u UserRepoImpl) SaveReactImage(context context.Context, react model.ReactImage) (model.ReactImage, error) {
+	statement := `INSERT INTO reacts(id_react, id_image, react, id_user) VALUES(:id_react, :id_image, :react, :id_user)`
+	_, err := u.sql.Db.NamedExecContext(context, statement, react)
+	if err != nil {
+		return react, errorutil.ReactFail
+	}
+	return react, nil
+}
+
+func (u UserRepoImpl) SelectReactsByUserId(context context.Context, id string) ([]model.ReactImage, error) {
+	arr := make([]model.ReactImage, 0)
+	err := u.sql.Db.SelectContext(context, &arr, "SELECT * FROM reacts WHERE id_user = $1", id)
+	if err != nil {
+		log.Error(err.Error())
+		return arr, err
+	}
+	return arr, nil
+}

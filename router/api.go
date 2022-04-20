@@ -30,4 +30,7 @@ func (api *API) SetupRouter() {
 	api.Echo.PUT("/update-image", api.ImageHandler.UpdateImage) // by Id
 	api.Echo.PUT("/show-images", api.ImageHandler.ShowImages)
 	api.Echo.PUT("/delete-image", api.ImageHandler.DeleteImage)
+	user.GET("/show-images", api.ImageHandler.ShowImagesByUser)
+	user.PUT("/react-image", api.UserHandler.ReactImage)
+	user.GET("/show-reacts", api.UserHandler.ShowReacts)
 }

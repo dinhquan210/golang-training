@@ -1,0 +1,57 @@
+time="2022-04-20T00:50:45.730288595Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T00:50:45.736023334Z" level=error msg="Email là bắt buộc \n Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=73
+time="2022-04-20T00:50:59.532965848Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T00:50:59.534300503Z" level=error msg="Email là bắt buộc \n Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=73
+time="2022-04-20T00:51:50.564832139Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T00:51:50.565559717Z" level=error msg="Email là bắt buộc \n Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=73
+time="2022-04-20T00:51:50.915049783Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T00:51:50.915647374Z" level=error msg="Email là bắt buộc \n Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=73
+time="2022-04-20T00:52:58.989188828Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T00:53:39.70338826Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T00:54:40.886148217Z" level=error msg="code=415, message=Unsupported Media Type" file=/build/handler/user_handler.go line=68
+time="2022-04-20T01:40:08.115789918Z" level=error msg="Luu anh that bai" file=/build/handler/user_handler.go line=154
+time="2022-04-20T01:40:23.500521365Z" level=error msg="Luu anh that bai" file=/build/handler/user_handler.go line=154
+time="2022-04-20T01:40:42.916329712Z" level=error msg="Luu anh that bai" file=/build/handler/user_handler.go line=154
+time="2022-04-20T01:40:45.215385037Z" level=error msg="Luu anh that bai" file=/build/handler/user_handler.go line=154
+time="2022-04-20T01:44:29.714439833Z" level=error msg="Luu anh that bai" file=/build/handler/user_handler.go line=154
+time="2022-04-20T01:45:59.576632272Z" level=error msg="Luu anh that bai" file=/build/handler/user_handler.go line=154
+time="2022-04-20T02:29:45.70785652Z" level=error msg="missing destination name user_creat in *[]model.Image" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:29:45.715205127Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:31:06.896444305Z" level=error msg="missing destination name user_creat in *[]model.Image" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:31:06.900827608Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:41:43.564873338Z" level=error msg="missing destination name user_creat in *[]model.Image" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:41:43.569984136Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:43:37.872250968Z" level=error msg="missing destination name user_creat in *[]model.Image" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:43:37.876758333Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:49:08.470639101Z" level=error msg="missing destination name user_creat in *[]model.Image" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:49:08.476616734Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:50:25.93406382Z" level=error msg="missing destination name user_creat in *[]model.Image" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:50:25.934710874Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:52:23.980557178Z" level=error msg="sql: Scan error on column index 2, name \"urls_raw\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:52:23.986486366Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:53:09.064939171Z" level=error msg="sql: Scan error on column index 2, name \"urls_raw\": converting NULL to string is unsupported" file=/build/repository/repo_impl/image_repo_impl.go line=62
+time="2022-04-20T02:53:09.070694277Z" level=error file=/build/handler/image_handler.go line=91
+time="2022-04-20T02:59:59.218409527Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T02:59:59.223411068Z" level=error file=/build/handler/image_handler.go line=94
+time="2022-04-20T03:00:52.384296936Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T03:00:52.390014319Z" level=error file=/build/handler/image_handler.go line=95
+time="2022-04-20T03:01:34.721125001Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T03:01:34.726358175Z" level=error file=/build/handler/image_handler.go line=95
+time="2022-04-20T03:02:50.215144668Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T03:05:07.383985799Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T03:06:14.843137098Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T03:06:35.457202294Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T03:12:01.875381914Z" level=error msg="scannable dest type slice with >1 columns (10) in result" file=/build/repository/repo_impl/image_repo_impl.go line=96
+time="2022-04-20T08:56:48.5040378Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=165
+time="2022-04-20T08:57:06.1653047Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=165
+time="2022-04-20T08:57:06.1681749Z" level=error msg="Loi khong react duoc" file=/build/handler/user_handler.go line=177
+time="2022-04-20T08:58:24.9548403Z" level=error msg="code=400, message=Syntax error: offset=58, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=165
+time="2022-04-20T08:58:24.9570125Z" level=error msg="Loi khong react duoc" file=/build/handler/user_handler.go line=177
+time="2022-04-20T09:00:32.4177389Z" level=error msg="code=400, message=Syntax error: offset=66, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=165
+time="2022-04-20T09:00:32.419708Z" level=error msg="Loi khong react duoc" file=/build/handler/user_handler.go line=177
+time="2022-04-20T09:00:40.4051995Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=165
+time="2022-04-20T09:00:40.4077608Z" level=error msg="Loi khong react duoc" file=/build/handler/user_handler.go line=177
+time="2022-04-20T09:25:35.2258752Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=165
+time="2022-04-20T09:28:23.0380151Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=166
+time="2022-04-20T09:29:49.5931988Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=166
+time="2022-04-20T09:33:13.9087916Z" level=error msg="code=400, message=Syntax error: offset=55, error=invalid character '/' after object key:value pair, internal=invalid character '/' after object key:value pair" file=/build/handler/user_handler.go line=166

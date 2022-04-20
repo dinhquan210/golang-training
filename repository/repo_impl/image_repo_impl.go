@@ -65,11 +65,6 @@ func (i *ImageRepoImpl) SelectImage(context context.Context, arr []model.Image) 
 	return arr, nil
 }
 
-func (i *ImageRepoImpl) SelectImageById(context context.Context, imageId string) (model.Image, error) {
-
-	return model.Image{}, nil
-}
-
 func (i *ImageRepoImpl) CheckIdImage(context context.Context, id string) (model.Image, error) {
 	var image = model.Image{}
 	err := i.sql.Db.GetContext(context, &image, "SELECT * FROM images WHERE id=$1", id)
@@ -92,4 +87,22 @@ func (i *ImageRepoImpl) DelImageById(context context.Context, req_id req.ReqImag
 		return errorutil.DeleteImageFail
 	}
 	return nil
+}
+
+func (i *ImageRepoImpl) SelectImageByUser(context context.Context, user string) ([]model.Image, error) {
+	arr := make([]model.Image, 0)
+	err := i.sql.Db.SelectContext(context, &arr, "SELECT * FROM images WHERE user_creat = $1", user)
+	if err != nil {
+		log.Error(err.Error())
+		return arr, err
+	}
+	return arr, nil
+}
+
+func (i *ImageRepoImpl) CountLikeImage(id string) (int, error) {
+	return 0, nil
+}
+
+func (i *ImageRepoImpl) CountDislikeImage(id string) (int, error) {
+	return 0, nil
 }

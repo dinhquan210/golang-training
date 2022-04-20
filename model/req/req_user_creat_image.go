@@ -1,8 +1,8 @@
 package req
 
 type ReqUserCreatImage struct {
-	URLs_full   string `JSON:"urls"`
-	Width       int    `JSON:"width"`
-	Height      int    `JSON:"height"`
-	Description string `JSON:"description"`
+	URLs_full   string `json:"urls"`
+	Width       int    `json:"width"`
+	Height      int    `json:"height"`
+	Description string `json:"description"`
 }

@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"golang-training/log"
 	"golang-training/model"
 	req "golang-training/model/req"
@@ -51,15 +50,9 @@ func (u *UserHandler) HandlerSignUp(c echo.Context) error {
 	user, err = u.UserRepo.SaveUser(c.Request().Context(), user)
 	if err != nil {
 		log.Error(err.Error())
-		model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
+		return model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
 	}
 
-	//GEN token
-	token, err := security.GenToken(user)
-	if err != nil {
-		model.ResponseHelper(c, http.StatusInternalServerError, err.Error(), nil)
-	}
-	user.Token = token
 	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", user)
 }
 
@@ -67,12 +60,12 @@ func (u *UserHandler) HandlerSignIn(c echo.Context) error {
 	req := req.ReqSignIn{}
 	if err := c.Bind(&req); err != nil {
 		log.Error(err.Error())
-		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
+		return model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	if err := c.Validate(req); err != nil {
 		log.Error(err.Error())
-		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
+		return model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
 	}
 
 	user, err := u.UserRepo.CheckLogin(c.Request().Context(), req)
@@ -88,7 +81,7 @@ func (u *UserHandler) HandlerSignIn(c echo.Context) error {
 
 	token, err := security.GenToken(user)
 	if err != nil {
-		model.ResponseHelper(c, http.StatusInternalServerError, err.Error(), nil)
+		return model.ResponseHelper(c, http.StatusInternalServerError, err.Error(), nil)
 	}
 	user.Token = token
 	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", user)
@@ -97,7 +90,6 @@ func (u *UserHandler) HandlerSignIn(c echo.Context) error {
 func (u *UserHandler) Profile(c echo.Context) error {
 	tokenData := c.Get("user").(*jwt.Token)
 	claims := tokenData.Claims.(*model.JwtCustomClaims)
-	fmt.Println(claims.FullName)
 
 	user, err := u.UserRepo.SelectUserById(c.Request().Context(), claims.UserId)
 	if err != nil {
@@ -141,18 +133,66 @@ func (u *UserHandler) CreateImage(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return err
 	}
+	tokenData := c.Get("user").(*jwt.Token)
+	claims := tokenData.Claims.(*model.JwtCustomClaims)
 
 	ImageID, err := uuid.NewUUID()
 	if err != nil {
 		log.Error(err.Error())
 		model.ResponseHelper(c, http.StatusForbidden, err.Error(), nil)
 	}
+
 	image := model.Image{
 		ImageID:     ImageID.String(),
 		URLs_full:   req.URLs_full,
 		Width:       req.Width,
 		Height:      req.Height,
 		Description: &req.Description,
+		User_Creat:  &claims.FullName,
+	}
+
+	image, err = u.UserRepo.SaveImageCreatByUser(c.Request().Context(), image)
+	if err != nil {
+		log.Error(err.Error())
+		return model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
 	}
 	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", image)
+}
+
+func (u *UserHandler) ReactImage(c echo.Context) error {
+	req := req.ReqReactImage{}
+	if err := c.Bind(&req); err != nil {
+		log.Error(err.Error())
+		model.ResponseHelper(c, http.StatusBadRequest, err.Error(), nil)
+	}
+	tokenData := c.Get("user").(*jwt.Token)
+	claims := tokenData.Claims.(*model.JwtCustomClaims)
+	reactId, err := uuid.NewUUID()
+	if err != nil {
+		log.Error(err.Error())
+		model.ResponseHelper(c, http.StatusForbidden, err.Error(), nil)
+	}
+	react := model.ReactImage{
+		ReactId: reactId.String(),
+		ImageId: req.IdImage,
+		React:   req.React,
+		UserId:  claims.UserId,
+	}
+	react, err = u.UserRepo.SaveReactImage(c.Request().Context(), react)
+	if err != nil {
+		log.Error(err.Error())
+		return model.ResponseHelper(c, http.StatusConflict, err.Error(), nil)
+	}
+	return model.ResponseHelper(c, http.StatusOK, "xử lý thành công", react)
+}
+
+func (u *UserHandler) ShowReacts(c echo.Context) error {
+	tokenData := c.Get("user").(*jwt.Token)
+	claims := tokenData.Claims.(*model.JwtCustomClaims)
+	arr, err := u.UserRepo.SelectReactsByUserId(c.Request().Context(), claims.UserId)
+	if err != nil {
+		log.Error()
+		return err
+	}
+	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", arr)
 }

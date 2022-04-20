@@ -13,8 +13,8 @@ func CreateUnsplash() model.Image {
 	image := model.Image{
 		ImageID:      reBody.ImageID,
 		URLs_full:    reBody.URLs.URLs_full,
-		URLs_regular: reBody.URLs.RULs_regular,
-		URLs_Raw:     reBody.URLs.URLs_Raw,
+		URLs_regular: &reBody.URLs.RULs_regular,
+		URLs_Raw:     &reBody.URLs.URLs_Raw,
 		Width:        reBody.Width,
 		Height:       reBody.Height,
 		Description:  &reBody.Description,
