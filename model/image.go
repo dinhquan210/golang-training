@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Image struct {
-	ImageID      string    `json:"-" db:"id, omitempty"`
+	ImageID      string    `json:"id_image" db:"id, omitempty"`
 	URLs_Raw     *string   `json:"urls_raw,omitempty" db:"urls_raw,omitempty"`
 	URLs_full    string    `json:"urls_full,omitempty" db:"urls_full,omitempty"`
 	URLs_regular *string   `json:"urls_egular,omitempty" db:"urls_regular,omitempty"`
@@ -13,6 +13,6 @@ type Image struct {
 	Height       int       `json:"height,omitempty" db:"height,omitempty"`
 	Description  *string   `json:"description,omitempty" db:"description, omitempty"`
 	User_Creat   *string   `json:"user,omitempty" db:"user_creat, omitempty"`
-	Like         int
-	DisLike      int
+	Like         int       `json:"like"`
+	DisLike      int       `json:"dislike"`
 }

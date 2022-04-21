@@ -14,4 +14,6 @@ type UserRepo interface {
 	SaveImageCreatByUser(context context.Context, image model.Image) (model.Image, error)
 	SaveReactImage(context context.Context, react model.ReactImage) (model.ReactImage, error)
 	SelectReactsByUserId(context context.Context, id string) ([]model.ReactImage, error)
+	CountReactByUserAndImage(id_image string, id_user string) (int, error)
+	UpdateReact(context context.Context, react model.ReactImage) (model.ReactImage, error)
 }

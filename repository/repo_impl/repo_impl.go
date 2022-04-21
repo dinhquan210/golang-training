@@ -122,9 +122,16 @@ func (u UserRepoImpl) SaveImageCreatByUser(context context.Context, image model.
 
 func (u UserRepoImpl) SaveReactImage(context context.Context, react model.ReactImage) (model.ReactImage, error) {
 	statement := `INSERT INTO reacts(id_react, id_image, react, id_user) VALUES(:id_react, :id_image, :react, :id_user)`
-	_, err := u.sql.Db.NamedExecContext(context, statement, react)
+	count, _ := u.CountReactByUserAndImage(react.ImageId, react.UserId)
+	if count != 1 {
+		_, err := u.sql.Db.NamedExecContext(context, statement, react)
+		if err != nil {
+			return react, errorutil.ReactFail
+		}
+	}
+	_, err := u.UpdateReact(context, react)
 	if err != nil {
-		return react, errorutil.ReactFail
+		return react, nil
 	}
 	return react, nil
 }
@@ -137,4 +144,29 @@ func (u UserRepoImpl) SelectReactsByUserId(context context.Context, id string) (
 		return arr, err
 	}
 	return arr, nil
+}
+
+func (u *UserRepoImpl) CountReactByUserAndImage(id_image string, id_user string) (int, error) {
+	var count int
+	err := u.sql.Db.Get(&count, "SELECT COUNT(*) FROM reacts WHERE id_user = $1 AND id_image=$2", id_user, id_image)
+	if err != nil {
+		log.Error(err.Error())
+		return count, err
+	}
+	return count, nil
+}
+
+func (u *UserRepoImpl) UpdateReact(context context.Context, react model.ReactImage) (model.ReactImage, error) {
+	sqlStatement := `
+	UPDATE reacts 
+	SET 
+		react = :react
+	WHERE id_user    = :id_user AND id_image = :id_image
+`
+	_, err := u.sql.Db.NamedExecContext(context, sqlStatement, react)
+	if err != nil {
+		log.Error(err.Error())
+		return react, err
+	}
+	return react, nil
 }

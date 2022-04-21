@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"encoding/csv"
+	"fmt"
 	"golang-training/log"
 	"golang-training/model"
 	req "golang-training/model/req"
@@ -8,6 +10,7 @@ import (
 	"golang-training/security"
 	"golang-training/utils/errorutil"
 	"net/http"
+	"os"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
@@ -195,4 +198,39 @@ func (u *UserHandler) ShowReacts(c echo.Context) error {
 		return err
 	}
 	return model.ResponseHelper(c, http.StatusOK, "Xử lý thành công", arr)
+}
+
+func (u *UserHandler) CreateImageByCSV(c echo.Context) error {
+	tokenData := c.Get("user").(*jwt.Token)
+	claims := tokenData.Claims.(*model.JwtCustomClaims)
+	csvFile, err := os.Open("csv/thogn_image.csv")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Successfully Opened CSV file")
+	defer csvFile.Close()
+
+	csvLines, err := csv.NewReader(csvFile).ReadAll()
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, line := range csvLines {
+		ImageID, err := uuid.NewUUID()
+		if err != nil {
+			log.Error(err.Error())
+			model.ResponseHelper(c, http.StatusForbidden, err.Error(), nil)
+		}
+		image := model.Image{
+			ImageID:     ImageID.String(),
+			User_Creat:  &claims.FullName,
+			Description: &line[1],
+			URLs_full:   line[0],
+		}
+		image, err = u.UserRepo.SaveImageCreatByUser(c.Request().Context(), image)
+		if err != nil {
+			return err
+		}
+		fmt.Println(image)
+	}
+	return nil
 }

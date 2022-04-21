@@ -3,7 +3,6 @@ package repo_impl
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"golang-training/db"
 	"golang-training/log"
 	"golang-training/model"
@@ -32,7 +31,6 @@ func (i *ImageRepoImpl) SaveImage(context context.Context, image model.Image) (m
 	image.UpdatedAt = time.Now()
 	_, err := i.sql.Db.NamedExecContext(context, statement, image)
 	if err != nil {
-		fmt.Println(err)
 		return image, errorutil.GetRandomFail
 	}
 	return image, err
@@ -56,11 +54,17 @@ func (i *ImageRepoImpl) UpdateImageDescription(context context.Context, image mo
 	return image, nil
 }
 
-func (i *ImageRepoImpl) SelectImage(context context.Context, arr []model.Image) ([]model.Image, error) {
+func (i *ImageRepoImpl) SelectImage(context context.Context) ([]model.Image, error) {
+	arr := make([]model.Image, 0)
 	err := i.sql.Db.SelectContext(context, &arr, "SELECT * FROM images;")
 	if err != nil {
 		log.Error(err.Error())
 		return arr, err
+	}
+
+	for j := 0; j < len(arr); j++ {
+		arr[j].Like, _ = i.CountLikeImage(arr[j].ImageID)
+		arr[j].DisLike, _ = i.CountDislikeImage(arr[j].ImageID)
 	}
 	return arr, nil
 }
@@ -100,9 +104,39 @@ func (i *ImageRepoImpl) SelectImageByUser(context context.Context, user string) 
 }
 
 func (i *ImageRepoImpl) CountLikeImage(id string) (int, error) {
-	return 0, nil
+	var count int
+	err := i.sql.Db.Get(&count, "SELECT COUNT(*) FROM reacts WHERE react = 'like' AND id_image=$1", id)
+	if err != nil {
+		log.Error(err.Error())
+		return count, err
+	}
+	return count, nil
 }
 
 func (i *ImageRepoImpl) CountDislikeImage(id string) (int, error) {
-	return 0, nil
+	var count int
+	err := i.sql.Db.Get(&count, "SELECT COUNT(*) FROM reacts WHERE react = 'dislike' AND id_image=$1", id)
+	if err != nil {
+		log.Error(err.Error())
+		return count, err
+	}
+	return count, nil
+}
+
+func (i *ImageRepoImpl) DeleteReactById(id string) error {
+	_, err := i.sql.Db.Exec("DELETE FROM reacts WHERE id=$1", id)
+	if err != nil {
+		return errorutil.DeleteReactFail
+	}
+	return nil
+}
+
+func (i *ImageRepoImpl) SelectReactById(id string) (model.ReactImage, error) {
+	var react = model.ReactImage{}
+	err := i.sql.Db.Select(react, "SELECT * FROM images WHERE user_creat = $1", id)
+	if err != nil {
+		log.Error(err.Error())
+		return react, errorutil.ReactNotFound
+	}
+	return react, nil
 }

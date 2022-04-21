@@ -49,7 +49,7 @@ func (i *ImageHandler) UpdateImage(c echo.Context) error {
 
 func (i *ImageHandler) ShowImages(c echo.Context) error {
 
-	arr, err := i.ImageRepo.SelectImage(c.Request().Context(), []model.Image{})
+	arr, err := i.ImageRepo.SelectImage(c.Request().Context())
 	if err != nil {
 		log.Error()
 		return err

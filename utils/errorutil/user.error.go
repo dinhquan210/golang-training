@@ -8,5 +8,4 @@ var (
 	UserNotFound       = errors.New("khong tim thay nguoi dung nay")
 	UserNotUpdated     = errors.New("update thong tin that bai")
 	UserCreatImageFail = errors.New("Luu anh that bai")
-	ReactFail          = errors.New("Loi khong react duoc")
 )

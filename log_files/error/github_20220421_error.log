@@ -1,0 +1,17 @@
+time="2022-04-21T01:41:55.545921042Z" level=error msg="pq: column \"id\" does not exist" file=/build/repository/repo_impl/image_repo_impl.go line=109
+time="2022-04-21T01:43:10.511487442Z" level=error msg="must pass a pointer, not a value, to StructScan destination" file=/build/repository/repo_impl/image_repo_impl.go line=109
+time="2022-04-21T01:44:20.188063556Z" level=error msg="scannable dest type int with >1 columns (4) in result" file=/build/repository/repo_impl/image_repo_impl.go line=109
+time="2022-04-21T01:45:18.452544486Z" level=error msg="must pass a pointer, not a value, to StructScan destination" file=/build/repository/repo_impl/image_repo_impl.go line=109
+time="2022-04-21T02:25:58.556000944Z" level=error msg="code=400, message=Unmarshal type error: expected=string, got=number, field=password, offset=87, internal=json: cannot unmarshal number into Go struct field ReqSignUp.password of type string" file=/build/handler/user_handler.go line=24
+time="2022-04-21T02:25:58.561485602Z" level=error msg="Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=28
+time="2022-04-21T02:26:09.214143292Z" level=error msg="code=400, message=Unmarshal type error: expected=string, got=number, field=password, offset=88, internal=json: cannot unmarshal number into Go struct field ReqSignUp.password of type string" file=/build/handler/user_handler.go line=24
+time="2022-04-21T02:26:09.214909294Z" level=error msg="Mật khẩu tối thiểu 8 kí tự" file=/build/handler/user_handler.go line=28
+time="2022-04-21T02:26:09.217390994Z" level=error msg="nguoi dung da ton tai" file=/build/handler/user_handler.go line=52
+time="2022-04-21T02:26:21.032480305Z" level=error msg="nguoi dung da ton tai" file=/build/handler/user_handler.go line=52
+time="2022-04-21T04:32:47.4045767Z" level=error msg="pq: syntax error at or near \"WHERE\"" file=/build/repository/repo_impl/repo_impl.go line=170
+time="2022-04-21T04:32:57.6396375Z" level=error msg="pq: syntax error at or near \"WHERE\"" file=/build/repository/repo_impl/repo_impl.go line=170
+time="2022-04-21T06:09:53.8110211Z" level=error msg="pq: syntax error at or near \"WHERE\"" file=/build/repository/repo_impl/repo_impl.go line=170
+time="2022-04-21T06:12:13.5537127Z" level=error msg="pq: syntax error at or near \"WHERE\"" file=/build/repository/repo_impl/repo_impl.go line=170
+time="2022-04-21T06:13:08.3065214Z" level=error msg="pq: syntax error at or near \"WHERE\"" file=/build/repository/repo_impl/repo_impl.go line=169
+time="2022-04-21T06:40:32.8367469Z" level=error msg="pq: syntax error at or near \":=\"" file=/build/repository/repo_impl/repo_impl.go line=169
+time="2022-04-21T06:40:46.9564756Z" level=error msg="pq: column \"id\" does not exist" file=/build/repository/repo_impl/repo_impl.go line=169
